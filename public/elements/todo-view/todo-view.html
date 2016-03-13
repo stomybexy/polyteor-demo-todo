@@ -1,0 +1,69 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../todo-list/todo-list.html">
+<link rel="import" href="../todo-input/todo-input.html">
+<link rel="import" href="../todo-data/todo-data.html">
+
+
+<dom-module id="todo-view">
+    <template>
+        
+        <todo-data data="{{todos}}"></todo-data>
+        <todo-list todos="{{todos}}" on-delete-todo="deleteTodo" filter-by="{{filterBy}}"></todo-list>
+        <div hidden$="{{_hide(filterBy)}}">
+            <todo-input on-add-todo="addTodo"></todo-input>
+        </div>
+        
+    </template>
+    <script>
+        (function() {
+      'use strict';
+
+      Polymer({
+        is: 'todo-view',
+        listeners: {
+            'clear-todos': 'clearTodos'
+        },
+        properties: {
+          todos: Array,
+          filterBy: {
+             type: String,
+             value: 'all',
+             notify: true
+            }
+        },
+        clearTodos: function () {
+            window.console.log('TODO view cleanring todos...');
+            var toClear = _.filter(this.todos, function(todo){
+                return todo.isComplte;
+            })
+            _.each(toClear, function(todo){
+                Todos.remove(todo._id);
+            })
+        },
+        deleteTodo: function (e) {
+            window.console.log('Deleting todo', e.detail);
+            this.arrayDelete('todos', e.detail.todo);
+            Todos.remove(e.detail.todo._id, function(err, res){
+                console.log('result of delete', err, res);
+            });
+            
+        },
+        addTodo: function (e) {
+            var todo = {
+                label: e.detail.value,
+                isComplete: false
+            }
+            Todos.insert(todo, function(err, res){
+                console.log('result of insert', err, res);
+            });
+        },
+        _hide: function (filter) {
+            return filter === 'completed';
+        }
+
+      });
+    })();
+
+    </script>
+</dom-module>

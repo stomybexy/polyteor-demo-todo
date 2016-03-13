@@ -1,0 +1,26 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polyteor-element/polyteor-collection.html">
+
+
+
+<dom-module id="todo-data">
+    <template>
+        <polyteor-collection collection="todos" data="{{data}}" sort='{"label": 1}' autoupdate log></polyteor-collection>
+    </template>
+    <script>
+        (function() {
+      'use strict';
+
+      Polymer({
+        is: 'todo-data',
+
+        properties: {
+          data: {
+            type: Array,
+            notify: true
+          }
+        }
+      });
+    })();
+    </script>
+</dom-module>

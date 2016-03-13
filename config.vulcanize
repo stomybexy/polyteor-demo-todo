@@ -1,0 +1,7 @@
+{
+    "polyfill": "/bower_components/webcomponentsjs/webcomponents-lite.min.js",
+    "imports": [
+        
+        "/elements/elements.html"
+    ]
+}
