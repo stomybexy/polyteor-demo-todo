@@ -69,8 +69,8 @@
                     <span class="space"></span>
 
                     <!-- Toolbar icons -->
-                    <!--<paper-icon-button icon="refresh"></paper-icon-button>-->
-                    <paper-icon-button icon="search"></paper-icon-button>
+                    <paper-button on-tap="clear">Clear completed</paper-button>
+                    <paper-icon-button icon="account-circle"></paper-icon-button>
 
                     <!-- Application name -->
                     <div class="middle middle-container">
@@ -86,7 +86,7 @@
                 <!-- Main Content -->
                 <div class="content">
                     
-                    <todo-view filter-by="{{route}}"></todo-view>
+                    <todo-view id="view" filter-by="{{route}}"></todo-view>
                     
                 </div>
             </paper-scroll-header-panel>

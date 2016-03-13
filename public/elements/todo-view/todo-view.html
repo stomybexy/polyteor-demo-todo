@@ -35,7 +35,7 @@
         clearTodos: function () {
             window.console.log('TODO view cleanring todos...');
             var toClear = _.filter(this.todos, function(todo){
-                return todo.isComplte;
+                return todo.isComplete;
             })
             _.each(toClear, function(todo){
                 Todos.remove(todo._id);
@@ -43,19 +43,19 @@
         },
         deleteTodo: function (e) {
             window.console.log('Deleting todo', e.detail);
-            this.arrayDelete('todos', e.detail.todo);
             Todos.remove(e.detail.todo._id, function(err, res){
                 console.log('result of delete', err, res);
             });
             
         },
         addTodo: function (e) {
+            var self = this;
             var todo = {
                 label: e.detail.value,
                 isComplete: false
             }
             Todos.insert(todo, function(err, res){
-                console.log('result of insert', err, res);
+                console.log('Todo after insert', self.todos);
             });
         },
         _hide: function (filter) {

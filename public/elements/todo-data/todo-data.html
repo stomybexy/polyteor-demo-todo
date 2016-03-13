@@ -5,7 +5,8 @@
 
 <dom-module id="todo-data">
     <template>
-        <polyteor-collection collection="todos" data="{{data}}" sort='{"label": 1}' autoupdate log></polyteor-collection>
+        <!--<polyteor-collection collection="todos" data="{{data}}" sort='{"label": 1}' autoupdate log></polyteor-collection>-->
+        <polyteor-subscription name="todos" data="{{data}}" autoupdate log></polyteor-subscription>
     </template>
     <script>
         (function() {
