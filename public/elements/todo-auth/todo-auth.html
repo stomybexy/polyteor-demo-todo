@@ -11,6 +11,7 @@
 
 
 
+
 <dom-module id="todo-auth">
     <template>
         <style>
@@ -18,7 +19,7 @@
                 color: var(--primary-color)
             }
         </style>
-
+        <polyteor-user user="{{user}}"></polyteor-user>
         <paper-icon-button icon="account-circle" on-tap="signOut"></paper-icon-button>
 
         <paper-dialog modal opened="[[!user]]">
@@ -58,15 +59,7 @@
               notify: true
           }
         },
-        ready: function(){
-            var self = this;
-            Tracker.autorun(function(){
-                console.log('Setting user ...', self.user);
-                self.user = Meteor.user();
-                console.log('After Setting user ...', self.user);
-                
-            })
-        },
+
         _checkSignIn: function (e) {
             if (e.keyCode === 13) {
                 this.signIn();
