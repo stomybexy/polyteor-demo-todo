@@ -5,8 +5,8 @@
 
 <dom-module id="todo-data">
     <template>
-        <!--<polyteor-collection collection="todos" data="{{data}}" sort='{"label": 1}' autoupdate log></polyteor-collection>-->
-        <polyteor-subscription name="todos" data="{{data}}" autoupdate log></polyteor-subscription>
+        <polyteor-user user="{{user}}"></polyteor-user>
+        <polyteor-subscription name="todos" args="[[args]]" data="{{data}}" autoupdate log></polyteor-subscription>
     </template>
     <script>
         (function() {
@@ -19,7 +19,15 @@
           data: {
             type: Array,
             notify: true
+          },
+          user: Object,
+          args: {
+              type: Array,
+              computed: '_computeArgs(user)'
           }
+        },
+        _computeArgs: function(user){
+            return [user && user._id];
         }
       });
     })();

@@ -21,7 +21,7 @@
 
         <paper-icon-button icon="account-circle" on-tap="signOut"></paper-icon-button>
 
-        <paper-dialog modal opened="{{!user}}">
+        <paper-dialog modal opened="[[!user]]">
             <h2>Please sign in</h2>
             <div class="container">
                 <paper-input id="username" label="username or email"></paper-input>
@@ -32,6 +32,13 @@
                     <paper-button raised>
                         <iron-icon icon="account-box"></iron-icon>
                         Sign in
+                    </paper-button>
+
+                </div>
+                <div class="sign-in-btn" on-tap="googleSignIn">
+                    <paper-button raised>
+                        <iron-icon icon="account-box"></iron-icon>
+                        Google
                     </paper-button>
                 </div>
             </div>
@@ -46,15 +53,18 @@
 
         properties: {
           user: {
-            type: Object,
-            value: Meteor.user(),
-            notify: true
+              type: Object,
+              value: Meteor.user,
+              notify: true
           }
         },
         ready: function(){
             var self = this;
             Tracker.autorun(function(){
+                console.log('Setting user ...', self.user);
                 self.user = Meteor.user();
+                console.log('After Setting user ...', self.user);
+                
             })
         },
         _checkSignIn: function (e) {
@@ -77,6 +87,17 @@
         signOut: function(){
             console.log('Signing out...');
             Meteor.logout();
+        },
+        googleSignIn: function(){
+            var self = this;
+             Meteor.loginWithGoogle({}, function(err){
+                 if(!err){
+                     self.$.username.value = null;
+                     self.$.password.value = null; 
+                 }
+                 
+                
+             })
         }
       });
     })();

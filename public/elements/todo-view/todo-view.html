@@ -49,10 +49,12 @@
             
         },
         addTodo: function (e) {
+            
             var self = this;
             var todo = {
                 label: e.detail.value,
-                isComplete: false
+                isComplete: false,
+                creator: Meteor.user()._id
             }
             Todos.insert(todo, function(err, res){
                 console.log('Todo after insert', self.todos);

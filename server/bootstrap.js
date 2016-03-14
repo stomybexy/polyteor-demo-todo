@@ -1,5 +1,5 @@
-Meteor.startup(function(){
-    if(!Accounts.findUserByUsername('jo')){
+Meteor.startup(function() {
+    if (!Accounts.findUserByUsername('jo')) {
         Accounts.createUser({
             username: 'jo',
             email: 'jo@gmail.com',
@@ -9,4 +9,20 @@ Meteor.startup(function(){
             }
         })
     }
+    
+    accountConfig();
 })
+
+
+function accountConfig() {
+    ServiceConfiguration.configurations.upsert(
+        { service: "google" },
+        {
+            $set: {
+                clientId: process.env.GOOGLE_CLIENT_ID,
+                loginStyle: "popup",
+                secret: process.env.GOOGLE_SECRET
+            }
+        }
+    );
+}
