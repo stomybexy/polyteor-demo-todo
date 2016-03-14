@@ -1,0 +1,84 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+
+
+
+
+
+<dom-module id="todo-auth">
+    <template>
+        <style>
+            paper-button {
+                color: var(--primary-color)
+            }
+        </style>
+
+        <paper-icon-button icon="account-circle" on-tap="signOut"></paper-icon-button>
+
+        <paper-dialog modal opened="{{!user}}">
+            <h2>Please sign in</h2>
+            <div class="container">
+                <paper-input id="username" label="username or email"></paper-input>
+                <paper-input id="password" label="password" type="password" on-keydown="_checkSignIn"></paper-input>
+            </div>
+            <div>
+                <div class="sign-in-btn" on-tap="signIn">
+                    <paper-button raised>
+                        <iron-icon icon="account-box"></iron-icon>
+                        Sign in
+                    </paper-button>
+                </div>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+        (function() {
+      'use strict';
+
+      Polymer({
+        is: 'todo-auth',
+
+        properties: {
+          user: {
+            type: Object,
+            value: Meteor.user(),
+            notify: true
+          }
+        },
+        ready: function(){
+            var self = this;
+            Tracker.autorun(function(){
+                self.user = Meteor.user();
+            })
+        },
+        _checkSignIn: function (e) {
+            if (e.keyCode === 13) {
+                this.signIn();
+            }
+        },
+        signIn: function(){
+            var self = this;
+            console.log("Signing in...");
+              if (this.$.username.value && this.$.password.value) {
+                Meteor.loginWithPassword(this.$.username.value, this.$.password.value, function(err){
+                    if(!err){
+                        self.$.username.value = null;
+                        self.$.password.value = null;      
+                    }
+                })
+            }
+        },
+        signOut: function(){
+            console.log('Signing out...');
+            Meteor.logout();
+        }
+      });
+    })();
+    </script>
+</dom-module>

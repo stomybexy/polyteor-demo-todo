@@ -40,7 +40,7 @@
                 </paper-toolbar>
 
                 <!-- Drawer Content -->
-                <paper-menu attr-for-selected="data-route" selected="[[route]]" >
+                <paper-menu attr-for-selected="data-route" selected="[[route]]" hidden$={{!user}}>
                     <a data-route="all" href="{{baseUrl}}">
                         <iron-icon icon="assignment"></iron-icon>
                         <span>All todos</span>
@@ -70,7 +70,8 @@
 
                     <!-- Toolbar icons -->
                     <paper-button on-tap="clear">Clear completed</paper-button>
-                    <paper-icon-button icon="account-circle"></paper-icon-button>
+                    <!--<paper-icon-button icon="account-circle"></paper-icon-button>-->
+                    <todo-auth user="{{user}}"></todo-auth>
 
                     <!-- Application name -->
                     <div class="middle middle-container">
@@ -86,7 +87,7 @@
                 <!-- Main Content -->
                 <div class="content">
                     
-                    <todo-view id="view" filter-by="{{route}}"></todo-view>
+                    <todo-view id="view" filter-by="{{route}}" hidden$="{{!user}}"></todo-view>
                     
                 </div>
             </paper-scroll-header-panel>
