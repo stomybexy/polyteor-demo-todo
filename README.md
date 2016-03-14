@@ -1,6 +1,6 @@
 # Todo
 
-Todo app with polyteor.
+Todo app with polyteor. [Live demo](http://polyteor-todo.meteor.com)
 
 ## Bootstraping
  
